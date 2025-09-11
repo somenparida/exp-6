@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Calculator App</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            background-color: black;
+            color: white;
+            padding: 15px;
+            font-size: 24px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+
+        input[type="number"] {
+            width: 80px;
+            padding: 8px;
+            margin: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+
+        .results {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .result-box {
+            padding: 25px;
+            width: 220px;
+            font-size: 18px;
+            color: white;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .room-rent {
+            background-color: #007bff;
+        }
+
+        .accessories {
+            background-color: #28a745;
+        }
+
+        .emergency {
+            background-color: #007bff;
+        }
+
+        .saving {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Budget Calculator App</h1>
+
+    <p>Enter Amount that you want to Manage</p>
+    <input type="number" id="totalAmount" value="15000" min="0">
+
+    <p>How would you like to divide your money?</p><br>
+
+    Room Rent (%) <input type="number" id="roomPercent" value="35" min="0" max="100">
+    Accessories (%) <input type="number" id="accessoriesPercent" value="15" min="0" max="100">
+    Emergency (%) <input type="number" id="emergencyPercent" value="20" min="0" max="100">
+    Saving (%) <input type="number" id="savingPercent" value="30" min="0" max="100">
+
+    <br><br>
+    <button id="evaluateBtn">Evaluate My Money</button>
+
+    <div class="results">
+        <div class="result-box room-rent" id="roomRent">Room Rent Rs.0.00</div>
+        <div class="result-box accessories" id="accessories">Accessories Rs.0.00</div>
+        <div class="result-box emergency" id="emergency">Emergency Rs.0.00</div>
+        <div class="result-box saving" id="saving">Saving Rs.0.00</div>
+    </div>
+
+    <script>
+        $('#evaluateBtn').click(function () {
+            let totalAmount = parseFloat($('#totalAmount').val());
+            let roomPercent = parseFloat($('#roomPercent').val());
+            let accessoriesPercent = parseFloat($('#accessoriesPercent').val());
+            let emergencyPercent = parseFloat($('#emergencyPercent').val());
+            let savingPercent = parseFloat($('#savingPercent').val());
+
+            let totalPercent = roomPercent + accessoriesPercent + emergencyPercent + savingPercent;
+
+            if (totalPercent !== 100) {
+                alert('The sum of percentages must equal 100%. Please correct the input.');
+                return;
+            }
+
+            let roomRent = (totalAmount * roomPercent) / 100;
+            let accessories = (totalAmount * accessoriesPercent) / 100;
+            let emergency = (totalAmount * emergencyPercent) / 100;
+            let saving = (totalAmount * savingPercent) / 100;
+
+            if (
+                !Number.isInteger(roomRent) ||
+                !Number.isInteger(accessories) ||
+                !Number.isInteger(emergency) ||
+                !Number.isInteger(saving)
+            ) {
+                alert('The amount is not divisible by the percentages to give integer values.');
+                return;
+            }
+
+            $('#roomRent').text(`Room Rent Rs.${roomRent.toFixed(2)}`);
+            $('#accessories').text(`Accessories Rs.${accessories.toFixed(2)}`);
+            $('#emergency').text(`Emergency Rs.${emergency.toFixed(2)}`);
+            $('#saving').text(`Saving Rs.${saving.toFixed(2)}`);
+        });
+    </script>
+
+</body>
+
+</html>
